@@ -4,7 +4,3 @@ FROM employees -- ..then, on the employee table..
 LEFT JOIN roles ON employees.role_id = roles.id -- ...the employees table will join (from left) the roles table with/ON the column role_id in the employees table which will then become the id column in the roles table....then..
 LEFT JOIN departments ON roles.department_id = departments.id -- ...the employees table will join (from left) the departments table with/ON the column role_id in the roles table which will then become the id column in the departments table..then..
 LEFT JOIN employees AS manager ON employees.manager_id = manager.id; -- the employees table will also be given the name manager with/ON the manager_id column in the employees table which will then become the id column for managers.
-
-SELECT roles.id, roles.title, roles.salary, departments.name AS department  -- selecting id, salary and title from roles table, then 'name' column from departments table and calling it department
-FROM roles -- .. then from the roles table .. 
-LEFT JOIN departments ON roles.department_id = departments.id; -- ..the roles table will join the departments table with/ON the roles table with/ON the column department id which will become the department id on the departments table
