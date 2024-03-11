@@ -32,7 +32,11 @@ let tabby_teasers_llc = function () {
                 });
                 break;
             case 'View Employees':
-                db.query('SELECT * FROM employees, roles, departments;', (err, data) => {
+                db.query(`
+                SELECT employees.id, employees.first_name, employees.last_name, roles.title, roles.salary
+                FROM employees
+                JOIN roles ON employees.role_id = roles.id
+                JOIN departments ON roles.department_id = departments.id;`, (err, data) => {
                     if (err) throw (err);
                     console.log("Employees: ");
                     console.table(data);
