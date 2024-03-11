@@ -50,7 +50,7 @@ let tabby_teasers_llc = function () {
                 });
                 break;
             case 'View Roles':
-                db.query(`SELECT roles.title, roles.salary, departments.name 
+                db.query(`SELECT roles.title, roles.salary, departments.name AS department 
                 FROM roles JOIN departments ON roles.department_id = departments.id`, (err, data) => {
                     if (err) throw (err);
                     console.log('Roles: ')
