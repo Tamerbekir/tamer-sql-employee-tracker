@@ -4,7 +4,8 @@ INSERT INTO departments(name)
             ('Purrchasing'), 
             ('Feline Finance'),
             ('Meowketing and Communications'), 
-            ('Treat Distribution'); 
+            ('Treat Distribution'), 
+            ('Feline Resources');
 
 
 INSERT INTO roles(title, salary, department_id) 
@@ -15,6 +16,7 @@ INSERT INTO roles(title, salary, department_id)
             ('Kitty Content Creator', 59000, 3),
             ('Purrblic Relations', 54000, 3),
             ('Chief Treat Officer', 84000, 4),
+            ('Catcruiter', 96000, 6),
             ('Senior Snack Supervisor', 105000, 4);
 
 
@@ -25,7 +27,7 @@ INSERT INTO employees(first_name, last_name, role_id, manager_id)
             ('Luna', 'Blackheart', 3, 3),  
             ('Pasa', 'Akbas', 2, 2),
             ('Torbie', 'Cole', 5, 3),
-            ('Gigi', 'Akbas', 6, 1),
+            ('Gigi', 'Akbas', 8, 1),
             ('Brownie', 'Akbas', 1, 2),
             ('Orero', 'Puff', 5, 1),
             ('Zoey', 'Solomon', 4, 1);
