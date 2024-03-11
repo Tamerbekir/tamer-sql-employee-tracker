@@ -11,6 +11,7 @@ const db = mysql.createConnection(
     console.log(`Connected to the tabby_teasers_llc_db database.`)
 );
 
+
 let tabby_teasers_llc = function () {
     inquirer.prompt([
         {
@@ -32,8 +33,13 @@ let tabby_teasers_llc = function () {
                 });
                 break;
             case 'View Employees':
-                db.query(`
-                SELECT employees.id, employees.first_name, employees.last_name, roles.title AS role, roles.salary, manager_id AS manager
+                // TO SEE ALL DATA IN TABLE BY LINKING THE COLUMNS TOGETHER. First, selecting employee first/last name from employees table and role title/salary from roles table..
+                db.query(
+                // Selecting employee data and role data from the columns (for example, employees table, column first_name) from all tables with data. Added AS for an alias for when viewing in the table
+                // For example, manger_id shows as manager
+                // From the employees table, it will join with roles table with role.id column which will be the role id.
+                // From the employees table, it will join the departments table on the column departments_id from the roles table. THis will be the department id.
+                `SELECT employees.id, employees.first_name, employees.last_name, roles.title AS role, roles.salary, manager_id AS manager
                 FROM employees
                 JOIN roles ON employees.role_id = roles.id
                 JOIN departments ON roles.department_id = departments.id;`, (err, data) => {
@@ -44,7 +50,8 @@ let tabby_teasers_llc = function () {
                 });
                 break;
             case 'View Roles':
-                db.query('SELECT * FROM roles;', (err, data) => {
+                db.query(`SELECT roles.title, roles.salary, departments.name 
+                FROM roles JOIN departments ON roles.department_id = departments.id`, (err, data) => {
                     if (err) throw (err);
                     console.log('Roles: ')
                     console.table(data);
@@ -53,29 +60,32 @@ let tabby_teasers_llc = function () {
                 break;
 
 
-            // For adding to database
+
+            // For adding department to database
             case 'Add Department':
-                inquirer.prompt([ // When the user selects 'add department' they will get a new prompt
-                    {
-                        // the prompt will ask the user what name they would like for the new department they wish to add.
-                        type: 'input',
-                        name: 'departmentName',
-                        message: 'What is the name of the new department?',
-                        // the input is validated but if the user leaves the input blank the user will receive a console.log warning, otherwise the input is sent to the database and the user has a successful console.log message 
-                        validate: newDepartmentName => {
-                            if (newDepartmentName === '') 
-                                return ('Cannot leave blank. A new department must have a name.');
-                            else
-                                return true;
-                        }
-                    }]).then((addedDeptName) => { // once validated, the input data is sent and inserted into the database using the input the user typed in
-                        db.query('INSERT INTO departments (name) VALUES (?);', [addedDeptName.departmentName], (err, data) => {
-                            if (err) throw (err)
-                            console.log('A new department was added to the database.')
-                            tabby_teasers_llc()
-                        });
-                    });
-                break;
+            inquirer.prompt([ // When the user selects 'add department' they will get a new prompt
+            {
+                // the prompt will ask the user what name they would like for the new department they wish to add.
+                type: 'input',
+                name: 'departmentName',
+                message: 'What is the name of the new department?',
+                // the input is validated but if the user leaves the input blank the user will receive a console.log warning, otherwise the input is sent to the database and the user has a successful console.log message 
+                validate: newDepartmentName => {
+                    if (newDepartmentName === '') 
+                        return ('Cannot leave blank. A new department must have a name.');
+                    else
+                        return true;
+                }
+            }]).then((addedDeptName) => { // once validated, the input data is sent and inserted into the database using the input the user typed in
+                db.query('INSERT INTO departments (name) VALUES (?);', [addedDeptName.departmentName], (err, data) => {
+                    if (err) throw (err)
+                    console.log('A new department was added to the database.')
+                    tabby_teasers_llc()
+                });
+            });
+            break;
+
+
 
 
         }
