@@ -20,7 +20,7 @@ let tabby_teasers_llc = function () {
             message: 'Welcome to Tabby Teasers LLC! What would you like to do?',
             choices: ['View Departments', 'View Employees', 'View Roles', 'Add Department', 'Add Employee', 'Add Role', 'Update Employee Role']
         }
-// Used switch case for ease of use. Notes for one switch case can be applied to other similar ones.
+        // Used switch case for ease of use. Notes for one switch case can be applied to other similar ones.
     ]).then((input) => {
         switch (input.viewData) { // the choosen input will be used to to gain access to the viewData property from above
             case 'View Departments': // when the user selects 'vew departments' from the list prompt, this is executed ->
@@ -32,7 +32,7 @@ let tabby_teasers_llc = function () {
                 });
                 break;
             case 'View Employees':
-                db.query('SELECT * FROM employees;', (err, data) => {
+                db.query('SELECT * FROM employees, roles, departments;', (err, data) => {
                     if (err) throw (err);
                     console.log("Employees: ");
                     console.table(data);
@@ -49,11 +49,34 @@ let tabby_teasers_llc = function () {
                 break;
 
 
-// For adding to database
+            // For adding to database
+            case 'Add Department':
+                inquirer.prompt([ // When the user selects 'add department' they will get a new prompt
+                    {
+                        // the prompt will ask the user what name they would like for the new department they wish to add.
+                        type: 'input',
+                        name: 'departmentName',
+                        message: 'What is the name of the new department?',
+                        // the input is validated but if the user leaves the input blank the user will receive a console.log warning, otherwise the input is sent to the database and the user has a successful console.log message 
+                        validate: newDepartmentName => {
+                            if (newDepartmentName === '') 
+                                return ('Cannot leave blank. A new department must have a name.');
+                            else
+                                return true;
+                        }
+                    }]).then((addedDeptName) => { // once validated, the input data is sent and inserted into the database using the input the user typed in
+                        db.query('INSERT INTO departments (name) VALUES (?);', [addedDeptName.departmentName], (err, data) => {
+                            if (err) throw (err)
+                            console.log('A new department was added to the database.')
+                            tabby_teasers_llc()
+                        });
+                    });
+                break;
 
 
         }
     });
+
 };
 
 tabby_teasers_llc();
