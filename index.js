@@ -53,9 +53,9 @@ let tabby_teasers_llc = function () {
             case 'View Roles':
                 db.query(
                     `SELECT roles.title, roles.salary, departments.name AS department  
-                FROM roles JOIN departments ON roles.department_id = departments.id`, (err, data) => { //From the roles table, the title, salary data is collected. From departments table, name is collected. department name is given the alias of 'department'
-                // from the roles table, departments table is joined on id so that it pulls the department id
-                    if (err) throw (err); 
+                    FROM roles JOIN departments ON roles.department_id = departments.id`, (err, data) => { //From the roles table, the title, salary data is collected. From departments table, name is collected. department name is given the alias of 'department'
+                    // from the roles table, departments table is joined on id so that it pulls the department id
+                    if (err) throw (err);
                     console.log('Roles: ')
                     console.table(data);
                     tabby_teasers_llc();
@@ -70,9 +70,8 @@ let tabby_teasers_llc = function () {
                         type: 'input',
                         name: 'deptName',
                         message: 'What is the name of the new department?',
-                        // the input is validated but if the user leaves the input blank the user will receive a console.log warning, 
-                        //otherwise the input is sent to the database and the user has a successful console.log message 
-                        validate: deptName => {
+                        validate: deptName => { // the input is validated but if the user leaves the input blank the user will receive a console.log warning, 
+                                                //otherwise the input is sent to the database and the user has a successful console.log message 
                             if (deptName === '') {
                                 return 'Cannot leave blank. A new department must have a name.';
                             } else {
@@ -81,8 +80,9 @@ let tabby_teasers_llc = function () {
                         }
                     },
                 ]).then((input) => {
-                    // once validated, the input data is sent and inserted into the database for column name in departments table using the input the user typed in
-                    db.query('INSERT INTO departments (name) VALUES (?);', [input.deptName], (err) => {
+                    db.query('INSERT INTO departments (name) VALUES (?);', [input.deptName], (err) => { 
+                        // once validated, the input data is sent and inserted into the database for column name in 
+                        // departments table using the input the user typed in
                         if (err) throw err;
                         console.log('New department and role have been added.');
                         tabby_teasers_llc();
@@ -90,58 +90,67 @@ let tabby_teasers_llc = function () {
                 });
                 break;
 
-                // adding role to database
+            // Adding role to database
             case 'Add Role':
-                inquirer.prompt([
-                    {
-                        type: 'input',
-                        name: 'roleTitle',
-                        message: 'What is the title of this role?',
-                        validate: roleTitle => {
-                            if (roleTitle === '') {
-                                return 'Cannot leave blank. A title is needed in a department.';
-                            } else {
-                                return true;
+                // Grabbing the list of existing departments from database
+                db.query('SELECT id, name FROM departments;', (err, departments) => {
+                    if (err) throw (err) 
+                    inquirer.prompt([
+                        {
+                            type: 'input',
+                            name: 'roleTitle',
+                            message: 'What is the title of this role?',
+                            validate: roleTitle => {
+                                if (roleTitle === '') {
+                                    return 'Cannot leave blank. A title is needed in a department.';
+                                } else {
+                                    return true;
+                                }
                             }
-                        }
-                    },
-                    {
-                        type: 'input',
-                        name: 'roleSalary',
-                        message: 'What is the salary for this role?',
-                        validate: roleSalary => {
-                            if (isNaN(roleSalary)) {
-                                return 'Please enter a valid salary.';
-                            } else {
-                                return true;
+                        },
+                        {
+                            type: 'input',
+                            name: 'roleSalary',
+                            message: 'What is the salary for this role?',
+                            validate: roleSalary => {
+                                // Entered salary has to be a number, and if it is not a number they will get a message saying it is invalid.
+                                if (isNaN(roleSalary)) {
+                                    return 'Please enter a valid salary.';
+                                } else {
+                                    return true;
+                                }
                             }
+                        },
+                        {
+                            type: 'list',
+                            name: 'roleDept',
+                            message: 'In which department is this role?',
+                            // taking the departments table and taking the name and id of table 
+                            // Using the map method in function to create a new arrray from the name and id in departments
+                            // This will give the user the department choices. The 'name' is what the user will see in the list, 
+                            // and the 'value' is what will be used once selected by the user
+                            choices: departments.map(dept => ({ name: dept.name, value: dept.id }))
                         }
-                    },
-                    {
-                        type: 'input',
-                        name: 'roleDept',
-                        message: 'In what department is this role?',
-                        validate: roleDept => {
-                            if (roleDept === '') {
-                                return 'Please enter a valid department.';
-                            } else {
-                                return true;
-                            }
-                        }
-                    }
-                ]).then((input) => { // ran two database quries. One for slecting the department table in which it will go into and one for inserting roles.
-                    db.query('SELECT id FROM departments WHERE name = ?;', [input.roleDept], (err, data) => { //SELECTS id from departments table and takes the users input and makes it the department name. Example, department.name = (user typed in)
-                        if(err) throw (err)
-                    db.query('INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?);', [input.roleTitle, input.roleSalary, data[0].id], (err) => { // inserts roles.title, salary, and department id. data.[0] is the first column in which the department name
-                                if (err) throw err;
-                                console.log('New role has been added.');
-                                tabby_teasers_llc();
-                            });
-                    })
+                    ]).then((input) => {
+                        // instering the new role with titel, salary and department_id (user selects department id above) into the database 
+                        db.query('INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?);', [input.roleTitle, input.roleSalary, input.roleDept], (err) => {
+                            if (err) throw err;
+                            console.log('New role has been added.');
+                            tabby_teasers_llc();
+                        });
+                    });
                 });
                 break;
 
-                //adding employee to database
+
+
+
+
+
+
+
+
+            //adding employee to database
 
 
 
@@ -151,6 +160,7 @@ let tabby_teasers_llc = function () {
 };
 
 tabby_teasers_llc();
+
 
 
 
