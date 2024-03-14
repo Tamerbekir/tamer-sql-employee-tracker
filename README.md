@@ -1,7 +1,7 @@
 # Tamer - SQL Employee Tracker
 
 ## Description 
-This application allows a company to keep track of their employees, their roles/titles, their departments, as well as their salaries and managers using MySQL within a users command terminal. The Employee Tracker gives the user the ability to view all of their data, such as all of their employees, departments and roles/titles. Using the Employee Tracker, a user is able to change the role of an employee, create a new employees and assign them a role and department as well the option to make them a manager or assign them one.
+This application allows a company to keep track of their employees, their roles/titles, their departments, as well as their salaries and managers using MySQL within a user's command terminal. The Employee Tracker gives the user the ability to view all of their data, such as all of their employees, departments, and roles/titles. Using the Employee Tracker, a user can change the role of an employee, create ,new employees and assign them a role and department as well as the option to make them a manager or assign them one.
 
 
 # Table of Contents
@@ -13,9 +13,9 @@ This application allows a company to keep track of their employees, their roles/
 - [Questions](#questions)
 
 ## Installation 
-Requirements to use application: <a href=“https://dev.mysql.com/downloads/installer/“>MySQL</a>, <a href=“https://nodejs.org/en/“>NodeJs</a> and <a href=“https://www.npmjs.com/package/inquirer“>npm inquirer</a>.
+Requirements to use application: <a href=“https://dev.mysql.com/downloads/installer/“>MySQL</a> , <a href=“https://nodejs.org/en/“>NodeJs</a> and <a href=“https://www.npmjs.com/package/inquirer“>npm inquirer</a>.
 
-In order to use this application, the user must fork and/or clone over the repo once required packages are installed. Once the user has the repo set up on their location machine, follow the steps below.
+To use this application, the user must fork and/or clone over the repo once the required packages are installed. Once the user has the repo set up on their location machine, follow the steps below.
 
 1 - Open the command terminal on index.js
 
