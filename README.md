@@ -13,13 +13,13 @@ This application allows a company to keep track of their employees, their roles/
 - [Questions](#questions)
 
 ## Installation  
-Requirements to use application: <a href="https://dev.mysql.com/downloads/installer/">MySQL</a>, <a href="https://nodejs.org/en/">NodeJs</a> and <a href="https://www.npmjs.com/package/inquirer">npm inquirer</a>.
+**Requirements to use application: <a href="https://dev.mysql.com/downloads/installer/">MySQL</a>, <a href="https://nodejs.org/en/">NodeJs</a> and <a href="https://www.npmjs.com/package/inquirer">npm inquirer</a>.**
 
 To use this application, the user must fork and/or clone over the repo once the required packages are installed. Once the user has the repo set up on their location machine, follow the steps below.
 
 1 - Open the command terminal on index.js
 
-2 - Run command `npm I inquirer@8.4.2` to install packages.
+2 - Run command `npm i inquirer@8.4.2` to install packages.
 
 3 - Run command node `index.js` to run the application.
 
