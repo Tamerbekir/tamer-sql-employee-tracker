@@ -53,8 +53,10 @@ let tabby_teasers_llc = function () {
             case 'View Roles':
                 db.query(
                     `SELECT roles.title, roles.salary, roles.id, departments.name AS department  
-                FROM roles JOIN departments ON roles.department_id = departments.id`, (err, data) => { //From the roles table, the title, salary data is collected. From departments table, name is collected. department name is given the alias of 'department'
-                    // from the roles table, departments table is joined on id so that it pulls the department id
+                    FROM roles JOIN departments ON roles.department_id = departments.id`, (err, data) => { 
+                    //From the roles table, the title, salary data is collected. From departments table, name is collected. 
+                    // department name is given the alias of 'department'
+                    // from the roles table, departments table is joined on the roles table, column departments_id which will become the department id
                     if (err) throw (err);
                     console.log('Roles: ')
                     console.table(data);
@@ -233,7 +235,6 @@ let tabby_teasers_llc = function () {
                     });
                 });
                 break;
-
         }
     });
 
