@@ -19,7 +19,7 @@ CREATE TABLE roles( -- a table created for 'roles'
 );
 
 CREATE TABLE employees( -- a table created for 'employees'
-    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, -- a uniuqe id will be given to the employees table, which is auto generated
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, -- a unique id will be given to the employees table, which is auto generated
     first_name VARCHAR(50), -- the first name of the employee, 50 characters max
     last_name VARCHAR(50), -- the last name of the employee, 50 characters max
     role_id INT NOT NULL, -- role_id shows the relationship betweeen the employees and roles table. It will be given a number as an id
@@ -29,3 +29,4 @@ CREATE TABLE employees( -- a table created for 'employees'
     FOREIGN KEY (manager_id) -- the id/number given to the manager_id will be used 
     REFERENCEs employees(id) -- references the 'id' in the 'employees' table 
 );
+
