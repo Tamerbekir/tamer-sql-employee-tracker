@@ -20,13 +20,13 @@ INSERT INTO roles(title, salary, department_id)
             ('Senior Snack Supervisor', 105000, 4);
 
 
-INSERT INTO employees(first_name, last_name, role_id, manager_id) 
-    VALUES('Max', 'Rainbowfur', 7, NULL),
-            ('Miley', 'Bekir', 8, NULL), 
+INSERT INTO employees(first_name, last_name, role_id, manager_id)
+            VALUES('Miley', 'Bekir', 8, NULL), 
             ('Fluffy', 'White-Tail', 2, NULL),
+            ('Annie', 'Tobriecat', 5, NULL),
+            ('Max', 'Rainbowfur', 7, 4),
             ('Luna', 'Blackheart', 3, 3),  
             ('Pasa', 'Akbas', 2, 2),
-            ('Torbie', 'Cole', 5, 3),
             ('Gigi', 'Akbas', 8, 1),
             ('Brownie', 'Akbas', 1, 2),
             ('Orero', 'Puff', 5, 1),
