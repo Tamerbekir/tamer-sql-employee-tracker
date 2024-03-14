@@ -10,7 +10,7 @@ INSERT INTO departments(name)
 
 INSERT INTO roles(title, salary, department_id) 
         VALUES('Snoozing Officer', 10000, 1),
-            ('Seinor Snoozing Officer', 100000, 1), 
+            ('Senior Snoozing Officer', 100000, 1), 
             ('Furball Funds', 65000, 2), 
             ('Whisker Wealth Advisor', 54000, 2),
             ('Kitty Content Creator', 59000, 3),

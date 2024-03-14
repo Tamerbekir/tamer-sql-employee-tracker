@@ -23,7 +23,7 @@ let tabby_teasers_llc = function () {
         }
         // Used switch case for ease of use. Notes for one switch case can be applied to other similar ones.
     ]).then((input) => {
-        switch (input.viewData) { // the choosen input will be used to to gain access to the viewData property from above
+        switch (input.viewData) { // the chosen input will be used to to gain access to the viewData property from above
             case 'View Departments': // when the user selects 'vew departments' from the list prompt, this is executed ->
                 db.query('SELECT name AS departments FROM departments', (err, data) => { // database that grabs the data from departments and calls it 'departments' instead of what it is actuallty called, 'name'
                     if (err) throw (err); // if there is an error, throw error
@@ -128,13 +128,13 @@ let tabby_teasers_llc = function () {
                             name: 'roleDept',
                             message: 'In which department is this role?',
                             // taking the departments table and taking the name and id of table 
-                            // Using the map method in function to create a new arrray from the name and id in departments
+                            // Using the map method in function to create a new array from the name and id in departments
                             // This will give the user the department choices. The 'name' is what the user will see in the list, 
                             // and the 'value' is what will be used once selected by the user. This data will = roleDept and then inserted below.
                             choices: departments.map(dept => ({ name: dept.name, value: dept.id }))
                         }
                     ]).then((input) => {
-                        // instering the new role with titel, salary and department_id (user selects department id above) into the database 
+                        // inserting the new role with title, salary and department_id (user selects department id above) into the database 
                         db.query('INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?);', [input.roleTitle, input.roleSalary, input.roleDept], (err) => {
                             if (err) throw err;
                             console.log('New role has been added.');
@@ -146,7 +146,7 @@ let tabby_teasers_llc = function () {
 
             // Adding employee to database
             case 'Add Employee':
-                // Selecting id and titke from the roles table
+                // Selecting id and title from the roles table
                 db.query('SELECT id, title FROM roles;', (err, roles) => {
                     if (err) throw err;
                     // Selecting id, concatenating (so full names sow) the first and last name from the employees table, where the employees name will replace the manager_id, where the mananger_id column is null (the bosses) as an alias
@@ -193,7 +193,7 @@ let tabby_teasers_llc = function () {
                                 choices: managers.map(manager => ({ name: manager.name, value: manager.id })).concat([{ name: `This employee is a manager`, value: null }])
                             }
                         ]).then((empData) => {
-                            // Innserting the new employee name, last name, role, and newly created manager name into employee table database
+                            // Inserting the new employee name, last name, role, and newly created manager name into employee table database
                             db.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);',
                                 [empData.empFirstName, empData.empLastName, empData.empRole, empData.empManager], (err) => {
                                     if (err) throw err;
