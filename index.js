@@ -19,13 +19,13 @@ let tabby_teasers_llc = function () {
             type: 'list',
             name: 'viewData',
             message: 'Welcome to Tabby Teasers LLC! What would you like to do?',
-            choices: ['View Departments', 'View Employees', 'View Roles', 'Add Department', 'Add Employee', 'Add Role', 'Update Employee Role']
+            choices: ['View Departments', 'View Employees', 'View Roles', 'Add Department', 'Add Employee', 'Add Role', 'Update Employee Role', 'Quit'] //! Added 'quit' option
         }
         // Used switch case for ease of use. Notes for one switch case can be applied to other similar ones.
     ]).then((input) => {
         switch (input.viewData) { // the chosen input will be used to to gain access to the viewData property from above
             case 'View Departments': // when the user selects 'vew departments' from the list prompt, this is executed ->
-                db.query('SELECT name AS departments FROM departments', (err, data) => { // database that grabs the data from departments and calls it 'departments' instead of what it is actuallty called, 'name'
+                db.query('SELECT name AS departments FROM departments', (err, data) => { // database that grabs the data from departments and calls it 'departments' instead of what it is actually called, 'name'
                     if (err) throw (err); // if there is an error, throw error
                     console.log("Departments: "); // logs lists of departments
                     console.table(data); // logs/shows departments in a table format
@@ -53,7 +53,7 @@ let tabby_teasers_llc = function () {
             case 'View Roles':
                 db.query(
                     `SELECT roles.title, roles.salary, roles.id, departments.name AS department  
-                    FROM roles JOIN departments ON roles.department_id = departments.id`, (err, data) => { 
+                    FROM roles JOIN departments ON roles.department_id = departments.id`, (err, data) => {
                     //From the roles table, the title, salary data is collected. From departments table, name is collected. 
                     // department name is given the alias of 'department'
                     // from the roles table, departments table is joined on the roles table, column departments_id which will become the department id
@@ -63,7 +63,6 @@ let tabby_teasers_llc = function () {
                     tabby_teasers_llc();
                 });
                 break;
-
 
             // For adding department to database
             case 'Add Department':
@@ -204,6 +203,7 @@ let tabby_teasers_llc = function () {
                     });
                 });
                 break;
+
             case 'Update Employee Role':
                 // Selecting id and name from the employees table in the database
                 db.query('SELECT id, CONCAT(first_name, " ", last_name) as name FROM employees;', (err, employees) => {
@@ -235,9 +235,23 @@ let tabby_teasers_llc = function () {
                     });
                 });
                 break;
+            // gives the user tha ability to quit the application
+            case "Quit":
+                inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'quit',
+                        message: 'Are you sure you want to quit?',
+                        choices: ['Yes', 'No']
+                    }
+                ]).then((answers) => {
+                    if (answers === 'Yes')
+                        process.exit //exits the application if user confirms quit
+                    console.log('You have exited Tabby Teasers LLC.')
+                })
+                break;
         }
     });
-
 };
 
 tabby_teasers_llc();
